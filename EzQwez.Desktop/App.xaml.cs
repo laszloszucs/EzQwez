@@ -1,4 +1,5 @@
 ﻿using EzQwez.Application.Repositories;
+using EzQwez.Application.Services;
 using EzQwez.Infrastructure.EntityFrameworkDataAccess;
 using EzQwez.Infrastructure.EntityFrameworkDataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,7 @@ namespace EzQwez.Phrases
         {
             IUnityContainer container = new UnityContainer();
             container.RegisterType<IPhraseRepository, PhraseRepository>();
+            container.RegisterType<IUnitOfWork, UnitOfWork>();
 
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
@@ -34,6 +36,7 @@ namespace EzQwez.Phrases
             services.AddEntityFrameworkNpgsql().AddDbContext<ApplicationContext>(opt =>
                 opt.UseNpgsql("Server=localhost;User Id=postgres;Password=o9gtBXIPvH8e8jMz7BTaowD8BskHqipjp3YcfkWzSSrc9AC5V7hYo26GMiTpSd0;Database=EzQwez"));
             services.AddScoped<IPhraseRepository, PhraseRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<MainWindow>();
         }
     }

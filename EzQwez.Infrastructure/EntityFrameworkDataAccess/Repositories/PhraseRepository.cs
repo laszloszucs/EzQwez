@@ -3,6 +3,7 @@ using EzQwez.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,6 +17,13 @@ namespace EzQwez.Infrastructure.EntityFrameworkDataAccess.Repositories
         {
             _context = context ??
                 throw new ArgumentNullException(nameof(context));
+        }
+        
+        public ObservableCollection<Phrase> observablePhrases { get => new ObservableCollection<Phrase>(_context.Phrases); }
+
+        public void Add(Phrase phrase)
+        {
+            _context.Phrases.Add(phrase);
         }
 
         public async Task AddAsync(Phrase phrase)
