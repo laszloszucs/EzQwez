@@ -7,19 +7,27 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="7*" />
-            <RowDefinition Height="1*" />
-        </Grid.RowDefinitions>
-        <DataGrid Grid.Row="0" Name="AppDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Width="*" Header="English" Binding="{Binding English}" />
-                <DataGridTextColumn Width="*" Header="Hungarian" Binding="{Binding Hungarian}" />
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button Name="SaveButton" Grid.Row="1" FontFamily="Bahnschrift Light" FontSize="36" Click="SaveButton_OnClick">Save</Button>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="82*" />
+                <RowDefinition Height="13*" />
+                <RowDefinition Height="5*" />
+            </Grid.RowDefinitions>
+            <DataGrid Grid.Row="0" Name="AppDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Header="English" Binding="{Binding English}" />
+                    <DataGridTextColumn Width="*" Header="Hungarian" Binding="{Binding Hungarian}" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Name="SaveButton" Grid.Row="1" FontFamily="Bahnschrift Light" FontSize="36" Click="SaveButton_OnClick">Save</Button>
+            <StatusBar Grid.Row="2"/>
+        </Grid>
+        <Grid x:Name="LoadingIndicatorPanel" Visibility="Hidden">
+            <Rectangle Fill="Black" Opacity="0.25"/>
+            <ProgressBar x:Name="ProgressBar" Width="400" Height="50" Value="1" Margin="200,359,200,25" IsIndeterminate="True" />
+        </Grid>
     </Grid>
 </Window>

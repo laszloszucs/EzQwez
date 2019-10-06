@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using ApplicationCore.Models;
 using EzQwez.Models;
 using EzQwez.Services;
@@ -25,45 +26,44 @@ namespace EzQwez
             _sampleService = sampleService;
             _context = context;
             _settings = settings.Value;
-
-            Phrases = new ObservableCollection<Phrase>(_context.Phrases);
-
-            AppDataGrid.DataContext = Phrases;
+            _context.Phrases.Load();
+            AppDataGrid.DataContext = _context.Phrases.Local.ToObservableCollection();
         }
 
-        private void SaveButton_OnClick(object sender, RoutedEventArgs e)
+        private async void SaveButton_OnClick(object sender, RoutedEventArgs e)
         {
+            await Task.Run(() => SaveChanges(LoadingIndicatorPanel));
+        }
+
+        internal void SaveChanges(Grid loadingIndicatorPanel)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                loadingIndicatorPanel.Visibility = Visibility.Visible;
+            });
+            
             try
             {
-                foreach (var phrase in Phrases)
-                {
-                    var first = _context.Phrases.Find(phrase.Id);
-
-                    if (first != null)
-                    {
-                        first = phrase;
-                        _context.Entry(first).State = EntityState.Modified;
-                    }
-                    else
-                    {
-                        _context.Phrases.Add(phrase);
-                        _context.Entry(phrase).State = EntityState.Added;
-                    }
-                }
-
-                var removes = _context.Phrases.ToList().Except(Phrases);
-
-                _context.RemoveRange(removes);
-
                 if (_context.ChangeTracker.HasChanges())
                 {
                     _context.SaveChanges();
+                    // Changes are done!
                 }
+
+                // Nothing to changed!
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
+                // Error!
                 throw;
+            }
+            finally
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    loadingIndicatorPanel.Visibility = Visibility.Hidden;
+                });
             }
         }
     }
