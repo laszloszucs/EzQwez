@@ -2,6 +2,6 @@
 {
     public class AppSettings
     {
-        public string StringSetting { get; set; }
+        public string ExampleSetting { get; set; }
     }
 }

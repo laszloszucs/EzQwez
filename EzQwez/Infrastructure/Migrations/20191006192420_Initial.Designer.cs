@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(PhraseContext))]
-    [Migration("20191006145647_Initial")]
+    [Migration("20191006192420_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,9 +24,11 @@ namespace Infrastructure.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("English")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Hungarian")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -37,7 +39,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("Hungarian")
                         .IsUnique();
 
-                    b.ToTable("Phrases","test");
+                    b.ToTable("Phrases");
                 });
 #pragma warning restore 612, 618
         }

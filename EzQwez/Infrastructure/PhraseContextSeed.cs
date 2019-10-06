@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using ApplicationCore;
 using ApplicationCore.Interfaces;
 using ApplicationCore.Models;
 using Microsoft.EntityFrameworkCore;

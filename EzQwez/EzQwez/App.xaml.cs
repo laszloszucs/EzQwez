@@ -75,7 +75,7 @@ namespace EzQwez
                 .AddEntityFrameworkSqlite()
                 .AddDbContext<PhraseContext>();
 
-            services.AddTransient<IPhraseContextSeed, PhraseContextSeed>();
+            services.AddSingleton<IPhraseContextSeed, PhraseContextSeed>();
 
             services.AddScoped<ISampleService, SampleService>();
 

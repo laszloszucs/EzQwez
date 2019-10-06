@@ -22,9 +22,11 @@ namespace Infrastructure.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("English")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Hungarian")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -35,7 +37,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("Hungarian")
                         .IsUnique();
 
-                    b.ToTable("Phrases","test");
+                    b.ToTable("Phrases");
                 });
 #pragma warning restore 612, 618
         }
