@@ -1,19 +1,18 @@
-﻿<Window x:Class="EzQwez.MainWindow"
+﻿<Window x:Class="EzQwez.Windows.PhraseEditorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Phrase Editor" Height="450" Width="800" ResizeMode="CanMinimize" Visibility="Visible">
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="82*" />
-                <RowDefinition Height="13*" />
-                <RowDefinition Height="5*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="55" />
             </Grid.RowDefinitions>
             <DataGrid Grid.Row="0" Name="AppDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
@@ -22,7 +21,6 @@
                 </DataGrid.Columns>
             </DataGrid>
             <Button Name="SaveButton" Grid.Row="1" FontFamily="Bahnschrift Light" FontSize="36" Click="SaveButton_OnClick">Save</Button>
-            <StatusBar Grid.Row="2"/>
         </Grid>
         <Grid x:Name="LoadingIndicatorPanel" Visibility="Hidden">
             <Rectangle Fill="Black" Opacity="0.25"/>

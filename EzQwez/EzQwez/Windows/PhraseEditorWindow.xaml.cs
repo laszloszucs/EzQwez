@@ -5,13 +5,13 @@ using System.Windows.Controls;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
-namespace EzQwez
+namespace EzQwez.Windows
 {
-    public partial class MainWindow
+    public partial class PhraseEditorWindow
     {
         private readonly PhraseContext _context;
 
-        public MainWindow(PhraseContext context)
+        public PhraseEditorWindow(PhraseContext context)
         {
             InitializeComponent();
 
@@ -25,7 +25,7 @@ namespace EzQwez
             await Task.Run(() => SaveChanges(LoadingIndicatorPanel));
         }
 
-        internal void SaveChanges(Grid loadingIndicatorPanel)
+        internal async void SaveChanges(Grid loadingIndicatorPanel)
         {
             Dispatcher?.Invoke(() =>
             {
@@ -36,7 +36,7 @@ namespace EzQwez
             {
                 if (_context.ChangeTracker.HasChanges())
                 {
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     // TODO Notification Changes are done!
                 }
 

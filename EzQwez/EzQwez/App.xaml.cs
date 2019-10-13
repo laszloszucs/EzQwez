@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
-using ApplicationCore;
 using ApplicationCore.Interfaces;
+using EzQwez.Commands;
 using EzQwez.Models;
 using EzQwez.Services;
+using EzQwez.Windows;
 using Infrastructure;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -20,6 +22,15 @@ namespace EzQwez
         public IConfiguration Configuration { get; private set; }
         protected override void OnStartup(StartupEventArgs e)
         {
+            var proc = Process.GetCurrentProcess();
+
+            if (Process.GetProcesses().Count(p => p.ProcessName == proc.ProcessName) > 1)
+            {
+                MessageBox.Show("Already an instance is running...");
+                Shutdown(1);
+                return;
+            }
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", false, true);
@@ -38,8 +49,7 @@ namespace EzQwez
 
             SeedDatabase(ServiceProvider);
 
-            var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
-            mainWindow.Show();
+            ServiceProvider.GetRequiredService<MyNotifyIcon>();
         }
 
         private static void SeedDatabase(IServiceProvider serviceProvider)
@@ -77,9 +87,13 @@ namespace EzQwez
 
             services.AddSingleton<IPhraseContextSeed, PhraseContextSeed>();
 
-            services.AddScoped<ISampleService, SampleService>();
+            services.AddTransient(typeof(MyNotifyIcon));
+            services.AddTransient(typeof(NewPhraseWindow));
+            services.AddTransient(typeof(PhraseEditorWindow));
+            services.AddTransient(typeof(OpenPhraseEditorCommand));
 
-            services.AddTransient(typeof(MainWindow));
+            services.AddSingleton<IWindowService, WindowService>();
+
         }
     }
 }

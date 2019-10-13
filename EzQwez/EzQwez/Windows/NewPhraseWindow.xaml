@@ -1,0 +1,27 @@
+﻿<Window x:Class="EzQwez.Windows.NewPhraseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="New Phrase" Height="450" Width="800" ResizeMode="CanMinimize" Visibility="Visible">
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="55" />
+            </Grid.RowDefinitions>
+            <TextBox Grid.Row="0" Background="White" TextWrapping="Wrap" AcceptsReturn="True" Width="Auto" Height="Auto" Text="{Binding English, Mode = TwoWay}"/>
+            <TextBox Grid.Row="1" Background="White" TextWrapping="Wrap" AcceptsReturn="True" Width="Auto" Height="Auto" Text="{Binding Hungarian, Mode = TwoWay}"/>
+            <Button Name="SaveButton" Grid.Row="2" FontFamily="Bahnschrift Light" FontSize="36" Click="SaveButton_OnClick">Save</Button>
+        </Grid>
+        <Grid x:Name="LoadingIndicatorPanel" Visibility="Hidden">
+            <Rectangle Fill="Black" Opacity="0.25"/>
+            <ProgressBar x:Name="ProgressBar" Width="400" Height="50" Value="1" Margin="200,359,200,25" IsIndeterminate="True" />
+        </Grid>
+    </Grid>
+</Window>
