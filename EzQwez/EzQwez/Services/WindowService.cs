@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using EzQwez.Windows;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,7 +26,6 @@ namespace EzQwez.Services
                 }
 
                 _newPhraseWindow = _serviceProvider.GetRequiredService<NewPhraseWindow>();
-                _newPhraseWindow.Closed += (sender, args) => _newPhraseWindow = null;
 
                 return _newPhraseWindow;
             }
@@ -41,7 +41,6 @@ namespace EzQwez.Services
                 }
 
                 _phraseEditorWindow = _serviceProvider.GetRequiredService<PhraseEditorWindow>();
-                _phraseEditorWindow.Closed += (sender, args) => _phraseEditorWindow = null;
 
                 return _phraseEditorWindow;
             }

@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using EzQwez.Commands;
 using EzQwez.Services;
+using EzQwez.Windows;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EzQwez
@@ -11,6 +12,8 @@ namespace EzQwez
     {
         public readonly IServiceProvider ServiceProvider;
         public MyNotifyIconViewModel MyNotifyIconViewModel;
+        public NewPhraseWindow NewPhraseWindow;
+        public PhraseEditorWindow PhraseEditorWindow;
 
         public MyNotifyIcon(IServiceProvider serviceProvider)
         {
@@ -22,17 +25,20 @@ namespace EzQwez
                 OpenPhraseEditorCommand = new OpenPhraseEditorCommand(serviceProvider)
             };
             DataContext = MyNotifyIconViewModel;
+            var windowService = ServiceProvider.GetRequiredService<IWindowService>();
+            NewPhraseWindow = windowService.NewPhraseWindow;
+            PhraseEditorWindow = windowService.PhraseEditorWindow;
         }
         private void NewPhraseMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var windowService = ServiceProvider.GetRequiredService<IWindowService>();
-            var newPhraseWindow = windowService.NewPhraseWindow;
+            NewPhraseWindow.Visibility = Visibility.Visible;
+            NewPhraseWindow.Activate();
         }
 
         private void PhraseEditortMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var windowService = ServiceProvider.GetRequiredService<IWindowService>();
-            var phraseEditorWindow = windowService.PhraseEditorWindow;
+            PhraseEditorWindow.Visibility = Visibility.Visible;
+            PhraseEditorWindow.Activate();
         }
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e)

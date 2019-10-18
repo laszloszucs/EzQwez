@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using ApplicationCore.Models;
 using EzQwez.Models;
 using Infrastructure;
@@ -19,14 +21,24 @@ namespace EzQwez.Windows
 
             _context = context;
             DataContext = CurrentPhrase;
+            Visibility = Visibility.Hidden;
+            Closing += OnClosing;
+            MoveToLowerRightCorner();
         }
-        
+
+        private void OnClosing(object sender, CancelEventArgs e)
+        {
+            Visibility = Visibility.Hidden;
+            e.Cancel = true;
+        }
+
         private async void SaveButton_OnClick(object sender, RoutedEventArgs e)
         {
             await Task.Run(() => SaveChanges(LoadingIndicatorPanel));
+            CurrentPhrase = new PhraseViewModel();
             Close();
         }
-
+        
         internal void SaveChanges(Grid loadingIndicatorPanel)
         {
             Dispatcher?.Invoke(() =>
@@ -57,6 +69,14 @@ namespace EzQwez.Windows
 
                 loadingIndicatorPanel.Visibility = Visibility.Hidden;
             });
+        }
+
+        private void MoveToLowerRightCorner()
+        {
+            var workingArea = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea;
+
+            Top = workingArea.Height - Height;
+            Left = workingArea.Width - Width;
         }
     }
 }

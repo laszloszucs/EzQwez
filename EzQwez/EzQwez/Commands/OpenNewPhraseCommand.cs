@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using EzQwez.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +18,8 @@ namespace EzQwez.Commands
         public void Execute(object parameter)
         {
             var windowService = _serviceProvider.GetRequiredService<IWindowService>();
-            var newPhraseWindow = windowService.NewPhraseWindow;
+            windowService.NewPhraseWindow.Visibility = Visibility.Visible;
+            windowService.NewPhraseWindow.Activate();
         }
 
         public bool CanExecute(object parameter)

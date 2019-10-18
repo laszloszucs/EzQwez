@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +19,14 @@ namespace EzQwez.Windows
             _context = context;
             _context.Phrases.Load();
             AppDataGrid.DataContext = _context.Phrases.Local.ToObservableCollection();
+            Visibility = Visibility.Hidden;
+            Closing += OnClosing;
+        }
+
+        private void OnClosing(object sender, CancelEventArgs e)
+        {
+            Visibility = Visibility.Hidden;
+            e.Cancel = true;
         }
 
         private async void SaveButton_OnClick(object sender, RoutedEventArgs e)
