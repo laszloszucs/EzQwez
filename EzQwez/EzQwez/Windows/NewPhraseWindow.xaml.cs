@@ -36,6 +36,7 @@ namespace EzQwez.Windows
         {
             await Task.Run(() => SaveChanges(LoadingIndicatorPanel));
             CurrentPhrase = new PhraseViewModel();
+            DataContext = CurrentPhrase;
             Close();
         }
         
